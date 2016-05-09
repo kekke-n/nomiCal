@@ -16,7 +16,7 @@
 	<div ng-app="nomiCalApp" ng-controller="nomiCalAppCtrl">
 		<div class="input-group">
 		<div class="btn-group">
-			<label>人数</label>
+			<label>参加人数</label>
 			{{nomiMember.length}}人 <br>
 			<label>合計額</label>
 			<input type="number" ng-model="totalPrice"><br>
@@ -24,7 +24,7 @@
 			<div ng-repeat="member in nomiMember">
 			<form class="form-inline">
 				<div class="form-group">
-					<input class="form-control" type="text" placeholder="名前" ng-model="member.name">
+					<h3>{{member.name}}</h3>
 				</div>
 				<div class="form-group">
 					<select class="form-control input-sm">
@@ -35,7 +35,7 @@
 					</select>
 				</div>	
 				<div class="form-group">
-					<h3>{{calcPrice(member)}}円</h3>
+					<h3>{{calcPrice(member) | number: 0}}円</h3>
 				</div>
 					<button class="btn-danger btn-xs" ng-click="deleteMember(member);">削除</button>
 				</form>
