@@ -1,29 +1,30 @@
 <!-- angular-calc -->
 <!DOCTYPE html>
-<html lang="en" ng-app>
+<html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>のみかい　かるきゅれーた</title>
+	<title>のみかる</title>
 	<link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 	<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>
+	<script src="js/nomiCal.js"></script>
 
 </head>
 <body>
-	<h2>のみかい　かるきゅれーたー</h2>
-	<div>
+	<h1>のみかる</h1>
+	<div ng-app="nomiCalApp" ng-controller="nomiCalAppCtrl">
 		<div class="input-group">
 		<div class="btn-group">
 			<label>人数</label>
-			<input type="number" placeholder=""><br>
+			{{member.length}}人 <br>
 			<label>合計額</label>
-			<input type="number" placeholder=""><br>
+			<input type="number"><br>
 			<hr>
-
+			<div ng-repeat="member in member">
 			<form class="form-inline">
 				<div class="form-group">
-					<input class="form-control" type="text" placeholder="名前" ng-model="result">
+					<input class="form-control" type="text" placeholder="名前" ng-model="member.name">
 				</div>
 				<div class="form-group">
 					<select class="form-control input-sm">
@@ -34,10 +35,16 @@
 					</select>
 				</div>	
 				<div class="form-group">
-					<div>{{result}}円</div>
+					<div>円</div>
 				</div>
+					<button class="btn-danger btn-xs" ng-click="deleteMember(member);">削除</button>
+				</form>
 			</form>
-
+			</div>
+			<form ng-submit="addMember()">
+				<input type="text" ng-model="memberName"  size="30" placeholder="のみ仲間を追加">
+				<input class="btn-primary" type="submit" value="追加">
+			</form>
 		</div>
 		</div>
 	</div>
