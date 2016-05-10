@@ -7,10 +7,15 @@ MyApp.controller('nomiCalAppCtrl', ['$scope' ,function($scope){
 
 	// var nomiCal = $scope;
 	$scope.nomiMember = [
-      {id:index, name:'中間', price:'0'},
+		{id:index, name:'中間', position:'一般', weight:1, price:0},
 	];
 
 	index++;
+
+	// 役職選択肢
+	$scope.positions = ['一般','部長','課長','チーフ'];
+	// デフォルト値の設定
+	$scope.position = $scope.positions[0];
 
 	// のみ仲間追加関数
 	$scope.addMember = function(){
