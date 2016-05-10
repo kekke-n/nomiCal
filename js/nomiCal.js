@@ -19,7 +19,7 @@ MyApp.controller('nomiCalAppCtrl', ['$scope' ,function($scope){
 
 	// のみ仲間追加関数
 	$scope.addMember = function(){
-		$scope.nomiMember.push({id:index, name:$scope.memberName,price:''});
+		$scope.nomiMember.push({id:index, name:$scope.memberName, position:'一般', weight:1, price:''});
 		$scope.memberName = '';
 		index++;
 	};
@@ -39,14 +39,35 @@ MyApp.controller('nomiCalAppCtrl', ['$scope' ,function($scope){
 		$scope.nomiMember.splice(delIndex, 1); // 一致したidをのメンバーを削除する
 	};
 
+	// 500円毎に切り上げする関数
+	function ceilFiveHundred(num){
+
+		if((num % 1000) == 0){
+			// 1000の倍数である場合
+			return num;
+		}
+
+		var hundredDigit = Math.floor(num / 1000);
+		
+		if((num % 1000) > 500){
+			// 下３桁が500より上
+			return (hundredDigit + 1) * 1000;
+		}
+		else if((num % 1000) <= 500){
+			// 下３桁が500以下
+			return (hundredDigit * 1000) + 500;
+		}
+		else{
+			return num;
+		}
+	};
+
 	$scope.calcPrice = function(member){
 		var totalPrice = $scope.totalPrice;
 		var sum = $scope.nomiMember.length;
 
-		member.price = totalPrice/sum;
+		member.price = ceilFiveHundred(totalPrice/sum);
 		return member.price;
 	};
-
-
 
 }]);
