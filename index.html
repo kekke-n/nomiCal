@@ -30,12 +30,13 @@
 					<select ng-model="member.position" ng-options="p for p in positions" class="form-control input-sm"></select>
 				</div>
 				<div class="form-group">
-					<h3>{{calcPrice(member) | number: 0}}円</h3>
+					<h3>{{showPrice(member) | number: 0}}円</h3>
 				</div>
 				<button class="btn-danger btn-xs" ng-click="deleteMember(member);">削除</button>
 				</form>
 			</form>
 			</div>
+			<h3>合計:</h3>
 			<form ng-submit="addMember()">
 				<input type="text" ng-model="memberName"  size="30" placeholder="のみ仲間を追加">
 				<input class="btn-primary" type="submit" value="追加">
