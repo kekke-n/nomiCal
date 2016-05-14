@@ -137,6 +137,11 @@ MyApp.controller('nomiCalAppCtrl', ['$scope' ,function($scope){
 	function paybackSurplus(priceList, surplus){
 		for(var i=0; i < priceList.length; i++){
 			priceList[i] = floatFiveHundred(priceList[i] - surplus);
+			if(priceList[i] < 0)
+			{
+				// 割り勘の額にマイナス値はあり得ないため、0にする
+				priceList[i] = 0;
+			}
 		}
 		return priceList;
 	}
