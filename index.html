@@ -19,7 +19,7 @@
 			<label>参加人数</label>
 			{{nomiMember.length}}人 <br>
 			<label>合計額</label>
-			<input type="number" ng-model="accountingAmount"><br>
+			<input min="1000" step="500" type="number" placeholder="1000円以上からね" ng-model="accountingAmount"><br>
 			<hr>
 			<div ng-repeat="member in nomiMember">
 			<form class="form-inline">

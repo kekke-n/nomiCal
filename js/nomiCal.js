@@ -13,12 +13,12 @@ MyApp.controller('nomiCalAppCtrl', ['$scope' ,function($scope){
 	[
 		"先輩、お願いしますー！！",
 		"ぐるなびの割引をさがせぇー！！",
-		"死んでも自分で建て替えるなー！！"
+		"自分で建て替えるなー！！"
 	];	
 
 	var surplusMessage =
 	[
-		"２次回でつかうかー！！",
+		"２次会でつかうかー！！",
 		"幹事代としてもらってしまえ！！",
 		"帰りにアイスたべよう！！"
 	];
@@ -101,6 +101,28 @@ MyApp.controller('nomiCalAppCtrl', ['$scope' ,function($scope){
 			return num;
 		}
 	};
+	
+	// 100円毎に切り下げる関数
+	function floatFifty(num){
+		if((num % 100) == 0){
+			// 100の倍数である場合
+			return num;
+		}
+
+		var hundredDigit = Math.floor(num / 100);
+		
+		if((num % 100) >= 50){
+			// 下2桁が50以上
+			return (hundredDigit * 100) + 50;
+		}
+		else if((num % 100) < 50){
+			// 下2桁が50以下
+			return hundredDigit * 100;
+		}
+		else{
+			return num;
+		}
+	}
 
 	// 500円毎に切り下げる関数
 	function floatFiveHundred(num){
@@ -112,11 +134,11 @@ MyApp.controller('nomiCalAppCtrl', ['$scope' ,function($scope){
 
 		var hundredDigit = Math.floor(num / 1000);
 		
-		if((num % 1000) > 500){
+		if((num % 1000) >= 500){
 			// 下３桁が500より上
 			return (hundredDigit * 1000) + 500;
 		}
-		else if((num % 1000) <= 500){
+		else if((num % 1000) < 500){
 			// 下３桁が500以下
 			return hundredDigit * 1000;
 		}
@@ -154,7 +176,14 @@ MyApp.controller('nomiCalAppCtrl', ['$scope' ,function($scope){
 	// 余剰金分配計算関数
 	function paybackSurplus(priceList, surplus){
 		for(var i=0; i < priceList.length; i++){
-			priceList[i] = floatFiveHundred(priceList[i] - surplus);
+			var float = priceList[i] - surplus;
+			if(float < 500){
+				// 500円以下の場合は100円毎に切り捨てる
+				priceList[i] = floatFifty(float);
+			}
+			else{
+				priceList[i] = floatFiveHundred(float);
+			}
 			if(priceList[i] < 0)
 			{
 				// 割り勘の額にマイナス値はあり得ないため、0にする
@@ -228,6 +257,10 @@ MyApp.controller('nomiCalAppCtrl', ['$scope' ,function($scope){
 		
 		// 不足分がある場合はじゃんけんできめるメッセージを表示
 		if($scope.shortage){
+			if($scope.accountingAmount < 1000){
+				$scope.message = $scope.accountingAmount+"円くらい自分で計算して";
+				return;
+			}
 			var rand = shortageMessage[ Math.floor( Math.random() * shortageMessage.length )];
 			$scope.message = ""+$scope.shortage+"円足りない！！"+rand;
 		}
