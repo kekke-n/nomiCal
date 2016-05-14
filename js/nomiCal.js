@@ -9,6 +9,20 @@ MyApp.controller('nomiCalAppCtrl', ['$scope' ,function($scope){
 	$scope.surplus = 0;
 	$scope.message = "";
 
+	var shortageMessage =
+	[
+		"先輩、お願いしますー！！",
+		"ぐるなびの割引をさがせぇー！！",
+		"死んでも自分で建て替えるなー！！"
+	];	
+
+	var surplusMessage =
+	[
+		"２次回でつかうかー！！",
+		"幹事代としてもらってしまえ！！",
+		"帰りにアイスたべよう！！"
+	];
+
 	// var nomiCal = $scope;
 	$scope.nomiMember = [
 		{id:index, name:'中間', position:'一般', weight:1, price:0},
@@ -214,11 +228,13 @@ MyApp.controller('nomiCalAppCtrl', ['$scope' ,function($scope){
 		
 		// 不足分がある場合はじゃんけんできめるメッセージを表示
 		if($scope.shortage){
-			$scope.message = "足りない"+$scope.shortage+"円はじゃんけんで決めて！！";
+			var rand = shortageMessage[ Math.floor( Math.random() * shortageMessage.length )];
+			$scope.message = ""+$scope.shortage+"円足りない！！"+rand;
 		}
 		// 不足分がある場合はじゃんけんできめるメッセージを表示
 		else if($scope.surplus){
-			$scope.message = "余った"+$scope.surplus+"円はじゃんけんで決めて！！";
+			var rand = surplusMessage[ Math.floor( Math.random() * surplusMessage.length )];
+			$scope.message = ""+$scope.surplus+"円余った！！"+rand;
 		}
 
 	}
