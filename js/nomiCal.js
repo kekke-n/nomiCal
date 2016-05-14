@@ -5,6 +5,9 @@ var MyApp = angular.module('nomiCalApp',[]);
 MyApp.controller('nomiCalAppCtrl', ['$scope' ,function($scope){
 	var index = 0;
 
+	$scope.shortage = 0;
+	$scope.message = "";
+
 	// var nomiCal = $scope;
 	$scope.nomiMember = [
 		{id:index, name:'中間', position:'一般', weight:1, price:0},
@@ -146,22 +149,35 @@ MyApp.controller('nomiCalAppCtrl', ['$scope' ,function($scope){
 		return priceList;
 	}
 
-	// 上司の不足金負担額　計算関数
-	function addToBuss(priceList, shortage){
+	// 重みが最も大きい人に不足金を負担させる
+	function addShortageToTopWeighter(priceList, shortage){
 		var member = $scope.nomiMember;
 		var maxWeight = member[0].weight;
 		var maxIndex = 0;
+		var sameWeightFlag = true;
 
-		for(var i=0; i < priceList.length; i++){
-			if(i == 0) continue;
+		for(var i=1; i < priceList.length; i++){ // i=0はmaxWeightの初期値に格納されているため、ループは不要
 			if(member[i].weight > maxWeight){
 				maxWeight = member[i].weight;
 				maxIndex = i;
+				sameWeightFlag = false;
+			}
+			else if(member[i].weight < maxWeight)
+			{
+				sameWeightFlag = false;
 			}
 		}
 
-		// 役職が最も高い人に不足金を追加する
-		priceList[maxIndex] = priceList[maxIndex]  + shortage;
+		if(sameWeightFlag){
+			// のみ仲間全員の重みが同じであれば、不足分はじゃんけんできめるようにメッセージを表示する。
+			// $scope.shortageMessage = "残り"+shortage+"円はじゃんけんで決めて！！";
+			$scope.shortage = shortage;
+		}
+		else{
+			// 重みが最も大きい人に不足金を追加する
+			priceList[maxIndex] = priceList[maxIndex]  + shortage;
+			$scope.shortage = 0;
+		}
 
 		return priceList;
 	}
@@ -183,6 +199,10 @@ MyApp.controller('nomiCalAppCtrl', ['$scope' ,function($scope){
 		var surplus = 0;		// 余剰金
 		var shortage = 0;		// 不足金
 
+		//初期化
+		$scope.shortage = 0;
+		$scope.message = "";
+
 		calcWeight();
 
 		split  = ceilFiveHundred(totalPrice/sum);
@@ -200,9 +220,14 @@ MyApp.controller('nomiCalAppCtrl', ['$scope' ,function($scope){
 		if(getSum(priceList) < totalPrice){
 			// 支払額より少ない場合
 			shortage = totalPrice - getSum(priceList);
-			priceList = addToBuss(priceList, shortage);
+			priceList = addShortageToTopWeighter(priceList, shortage);
 		}
 		// member.price = multiplyPriceByWeight(member, tmpPrice);
+
+		// 不足分がある場合はじゃんけんできめるメッセージを表示
+		if($scope.shortage){
+			$scope.message = "残り"+$scope.shortage+"円はじゃんけんで決めて！！";
+		}
 
 		setAllMemeberPrice(priceList);
 
