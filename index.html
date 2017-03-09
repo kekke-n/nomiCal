@@ -14,27 +14,14 @@
 
 	<style>
 	.main{
-		padding: 50px;
-	}
-	.person-info{
-		position: relative;
-	}
-	.price{
-		position: relative;
-		display: block;
-	}
-	.price label{
-		position: absolute;
-		right:0;
-		margin:auto;
-		display: block;
+		padding: 40px 40px;
 	}
 	.inline-perts{
 		display: inline;
 	}
-	/*.input-group label{
-		font-size: 20px;
-	}*/
+	.input-group label{
+		font-size: 17px;
+	}
 	</style>
 </head>
 <body>
@@ -51,9 +38,9 @@
 							<input min="1000" step="500" type="number" placeholder="1000円以上からね" ng-model="accountingAmount"><br>
 							<hr>
 							<div class="form-group">
-								<div class="row person-info"  ng-repeat="member in nomiMember">
-									<label class="control-label">{{member.name}}</label>
-									<select class="<input-xs></input-xs> inline-perts btn-xs"ng-model="member.position" ng-options="p for p in positions"></select>
+								<div class="person-info"  ng-repeat="member in nomiMember">
+									<label class="control-label">{{member.name}}&nbsp;</label>
+									<select class="btn-md inline-perts"ng-model="member.position" ng-options="p for p in positions"></select>&nbsp;
 									<button class="btn-danger btn-xs" ng-click="deleteMember(member);">削除</button>
 									<label>{{showPrice(member) | number: 0}}円</label>
 								</div>
@@ -62,8 +49,8 @@
 					</div>
 					<p>{{message}}</p>
 					<form ng-submit="addMember()">
-						<input type="text" ng-model="memberName" placeholder="のみ仲間を追加">
-						<input class="btn-primary" type="submit" value="追加">
+						<input class="inline-perts" type="text" ng-model="memberName" placeholder="のみ仲間を追加">
+						<input class="btn-primary inline-perts" type="submit" value="追加">
 					</form>
 				</div>
 			</div>
