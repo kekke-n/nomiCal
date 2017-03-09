@@ -11,61 +11,62 @@
 	<script src="js/nomiCal.js"></script>
 
 	<style>
-		.person-info{
-			position: relative;
-		}
-		.price{
-			position: relative;
-			display: block;
-		}
-		.price label{
-			position: absolute;
-			right:0;
-			margin:auto;
-			display: block;
-		}
-		.inline-perts{
-			display: inline;
-		}
-	</style>
+	.main{
+		padding: 50px;
+	}
 
+	.person-info{
+		position: relative;
+	}
+	.price{
+		position: relative;
+		display: block;
+	}
+	.price label{
+		position: absolute;
+		right:0;
+		margin:auto;
+		display: block;
+	}
+	.inline-perts{
+		display: inline;
+	}
+	/*.input-group label{
+		font-size: 20px;
+	}*/
+	</style>
 </head>
 <body>
-	<div class="container">
+	<div class="container main">
 		<div class="row">
 			<div class="box col-md-4 col-md-offset-4">
-				<div class="contents">
 				<h1>のみかる</h1>
 				<div ng-app="nomiCalApp" ng-controller="nomiCalAppCtrl">
 					<div class="input-group">
-					<div class="btn-group">
-						<label>参加人数</label>
-						{{nomiMember.length}}人 <br>
-						<label>合計額</label>
-						<input min="1000" step="500" type="number" placeholder="1000円以上からね" ng-model="accountingAmount"><br>
-						<hr>
-						<form>
+						<div class="btn-group">
+							<label>参加人数</label>
+							{{nomiMember.length}}人 <br>
+							<label>合計額</label>
+							<input min="1000" step="500" type="number" placeholder="1000円以上からね" ng-model="accountingAmount"><br>
+							<hr>
 							<div class="form-group">
 								<div class="row person-info"  ng-repeat="member in nomiMember">
-											<label class="control-label">{{member.name}}</label>
-											<select class="input-sm inline-perts"ng-model="member.position" ng-options="p for p in positions"></select>
-											<button class="btn-danger btn-xs" ng-click="deleteMember(member);">削除</button>
-											<label>{{showPrice(member) | number: 0}}円</label>
-										</div>
+									<label class="control-label">{{member.name}}</label>
+									<select class="<input-xs></input-xs> inline-perts btn-xs"ng-model="member.position" ng-options="p for p in positions"></select>
+									<button class="btn-danger btn-xs" ng-click="deleteMember(member);">削除</button>
+									<label>{{showPrice(member) | number: 0}}円</label>
+								</div>
 							</div>
 						</div>
-						</form>
-						</div>
-						<p>{{message}}</p>
-						<form ng-submit="addMember()">
-							<input type="text" ng-model="memberName" placeholder="のみ仲間を追加">
-							<input class="btn-primary" type="submit" value="追加">
-						</form>
 					</div>
-					</div>
+					<p>{{message}}</p>
+					<form ng-submit="addMember()">
+						<input type="text" ng-model="memberName" placeholder="のみ仲間を追加">
+						<input class="btn-primary" type="submit" value="追加">
+					</form>
 				</div>
 			</div>
-			</div>
 		</div>
+	</div>
 </body>
 </html>
